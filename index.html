@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALS 863: Introduction to Sociocultural Linguistics / Session 4</title>
+    <title>ALS 863: Introduction to Sociocultural Linguistics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -23,6 +23,8 @@
             --text-light: #757575;
             --session-bg: #FFD700; /* Bright gold/yellow */
             --session-text: #000; /* Black for contrast */
+            --social-color: #e91e63;
+            --academic-color: #2196f3;
         }
         
         body {
@@ -46,7 +48,7 @@
             text-align: center;
             position: sticky;
             top: 0;
-            z-index: 1000; /* Increased to ensure it's always on top */
+            z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         
@@ -103,7 +105,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: sticky;
             top: 110px;
-            z-index: 999; /* Increased to ensure it's below header but above content */
+            z-index: 999;
         }
         
         nav ul {
@@ -116,6 +118,7 @@
         
         nav li {
             margin: 5px;
+            position: relative;
         }
         
         nav a {
@@ -133,6 +136,61 @@
         nav a:hover, nav a.active {
             background-color: var(--primary);
             color: white;
+        }
+        
+        /* Dropdown menu styles */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 100;
+            border-radius: 8px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0;
+            text-align: left;
+            width: 100%;
+            display: block;
+            font-weight: normal;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f5f5f5;
+            color: var(--primary);
+        }
+        
+        /* Category indicators */
+        .social-category::before {
+            content: "•";
+            color: var(--social-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 15px;
+        }
+        
+        .academic-category::before {
+            content: "•";
+            color: var(--academic-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 15px;
         }
         
         main {
@@ -166,6 +224,19 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
+        .category-intro {
+            background-color: #e3f2fd;
+            border-left: 5px solid var(--academic-color);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        
+        .category-intro.social {
+            background-color: #fce4ec;
+            border-left-color: var(--social-color);
+        }
+        
         .reference {
             font-style: italic;
             font-size: 0.9rem;
@@ -183,36 +254,42 @@
             border-top: 1px solid #eee;
         }
         
-        .ref-table {
-            width: 100%;
-            border-collapse: collapse;
+        /* Updated References styling */
+        .references-section {
             margin: 20px 0;
-            font-size: 0.9rem;
         }
         
-        .ref-table th, .ref-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .references-category {
+            margin-bottom: 25px;
         }
         
-        .ref-table th {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .ref-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .ref-table a {
+        .references-category h3 {
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--primary-light);
+            margin-bottom: 12px;
             color: var(--primary);
-            text-decoration: none;
-            word-break: break-all;
         }
         
-        .ref-table a:hover {
-            text-decoration: underline;
+        .reference-link {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.2s ease;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .reference-link:hover {
+            background-color: #e8eaf6;
+            transform: translateX(3px);
+        }
+        
+        .reference-link i {
+            margin-right: 8px;
+            color: var(--primary-light);
         }
         
         .menu-toggle {
@@ -267,7 +344,7 @@
         .mobile-menu-container {
             display: none;
             position: relative;
-            z-index: 998; /* Ensure mobile menu appears below header */
+            z-index: 998;
         }
         
         @media (max-width: 900px) {
@@ -280,7 +357,7 @@
                 background-color: white;
                 padding: 10px 0;
                 position: sticky;
-                top: 110px; /* Position below header */
+                top: 110px;
                 z-index: 998;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
@@ -332,6 +409,41 @@
                 font-weight: 600;
             }
             
+            /* Mobile dropdown styles */
+            .mobile-dropdown {
+                padding: 12px 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                cursor: pointer;
+                background-color: white;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .mobile-dropdown-content {
+                display: none;
+                padding-left: 20px;
+            }
+            
+            .mobile-dropdown-content a {
+                display: block;
+                padding: 10px 0;
+                color: var(--text);
+                text-decoration: none;
+            }
+            
+            .mobile-dropdown-content a:hover {
+                color: var(--primary);
+            }
+            
+            .dropdown-indicator {
+                transition: transform 0.3s ease;
+            }
+            
+            .dropdown-indicator.open {
+                transform: rotate(180deg);
+            }
+            
             h1 {
                 font-size: 1.4rem;
             }
@@ -348,14 +460,6 @@
             
             .home-buttons {
                 grid-template-columns: 1fr;
-            }
-            
-            .ref-table {
-                font-size: 0.8rem;
-            }
-            
-            .ref-table th, .ref-table td {
-                padding: 8px 10px;
             }
         }
         
@@ -386,13 +490,8 @@
                 padding: 15px;
             }
             
-            .ref-table {
-                font-size: 0.75rem;
-            }
-            
-            /* Ensure mobile menu doesn't overlap with session title */
             .mobile-menu-container {
-                top: 135px; /* Adjusted for session title height */
+                top: 135px;
             }
         }
     </style>
@@ -415,16 +514,29 @@
         <div class="container">
             <ul id="nav-menu">
                 <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
-                <li><a href="#" class="nav-link" data-page="social-contexts">Social Contexts</a></li>
-                <li><a href="#" class="nav-link" data-page="expressing-identity">Expressing Identity</a></li>
-                <li><a href="#" class="nav-link" data-page="power-dynamics">Power Dynamics</a></li>
-                <li><a href="#" class="nav-link" data-page="politeness-norms">Politeness Norms</a></li>
-                <li><a href="#" class="nav-link" data-page="social-realities">Social Realities</a></li>
-                <li><a href="#" class="nav-link" data-page="academic-contexts">Academic Contexts</a></li>
-                <li><a href="#" class="nav-link" data-page="arguing-persuading">Arguing & Persuading</a></li>
-                <li><a href="#" class="nav-link" data-page="explaining-informing">Explaining & Informing</a></li>
-                <li><a href="#" class="nav-link" data-page="engaging-readers">Engaging Readers</a></li>
-                <li><a href="#" class="nav-link" data-page="constructing-knowledge">Constructing Knowledge</a></li>
+                
+                <!-- Social Contexts Dropdown -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link" data-page="social-contexts">Social Contexts</a>
+                    <div class="dropdown-content">
+                        <a href="#" class="nav-link social-category" data-page="expressing-identity">Expressing Identity</a>
+                        <a href="#" class="nav-link social-category" data-page="power-dynamics">Power Dynamics</a>
+                        <a href="#" class="nav-link social-category" data-page="politeness-norms">Politeness Norms</a>
+                        <a href="#" class="nav-link social-category" data-page="social-realities">Social Realities</a>
+                    </div>
+                </li>
+                
+                <!-- Academic Contexts Dropdown -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link" data-page="academic-contexts">Academic Contexts</a>
+                    <div class="dropdown-content">
+                        <a href="#" class="nav-link academic-category" data-page="arguing-persuading">Arguing & Persuading</a>
+                        <a href="#" class="nav-link academic-category" data-page="explaining-informing">Explaining & Informing</a>
+                        <a href="#" class="nav-link academic-category" data-page="engaging-readers">Engaging Readers</a>
+                        <a href="#" class="nav-link academic-category" data-page="constructing-knowledge">Constructing Knowledge</a>
+                    </div>
+                </li>
+                
                 <li><a href="#" class="nav-link" data-page="references">References</a></li>
             </ul>
         </div>
@@ -440,16 +552,31 @@
         </div>
         <div class="mobile-menu-items" id="mobile-menu-items">
             <a href="#" class="mobile-nav-link active" data-page="home">Home</a>
-            <a href="#" class="mobile-nav-link" data-page="social-contexts">Social Contexts</a>
-            <a href="#" class="mobile-nav-link" data-page="expressing-identity">Expressing Identity</a>
-            <a href="#" class="mobile-nav-link" data-page="power-dynamics">Power Dynamics</a>
-            <a href="#" class="mobile-nav-link" data-page="politeness-norms">Politeness Norms</a>
-            <a href="#" class="mobile-nav-link" data-page="social-realities">Social Realities</a>
-            <a href="#" class="mobile-nav-link" data-page="academic-contexts">Academic Contexts</a>
-            <a href="#" class="mobile-nav-link" data-page="arguing-persuading">Arguing & Persuading</a>
-            <a href="#" class="mobile-nav-link" data-page="explaining-informing">Explaining & Informing</a>
-            <a href="#" class="mobile-nav-link" data-page="engaging-readers">Engaging Readers</a>
-            <a href="#" class="mobile-nav-link" data-page="constructing-knowledge">Constructing Knowledge</a>
+            
+            <!-- Social Contexts Mobile Dropdown -->
+            <div class="mobile-dropdown" onclick="toggleMobileDropdown('social')">
+                <span>Social Contexts</span>
+                <i class="fas fa-chevron-down dropdown-indicator" id="social-indicator"></i>
+            </div>
+            <div class="mobile-dropdown-content" id="social-dropdown">
+                <a href="#" class="mobile-nav-link social-category" data-page="expressing-identity">• Expressing Identity</a>
+                <a href="#" class="mobile-nav-link social-category" data-page="power-dynamics">• Power Dynamics</a>
+                <a href="#" class="mobile-nav-link social-category" data-page="politeness-norms">• Politeness Norms</a>
+                <a href="#" class="mobile-nav-link social-category" data-page="social-realities">• Social Realities</a>
+            </div>
+            
+            <!-- Academic Contexts Mobile Dropdown -->
+            <div class="mobile-dropdown" onclick="toggleMobileDropdown('academic')">
+                <span>Academic Contexts</span>
+                <i class="fas fa-chevron-down dropdown-indicator" id="academic-indicator"></i>
+            </div>
+            <div class="mobile-dropdown-content" id="academic-dropdown">
+                <a href="#" class="mobile-nav-link academic-category" data-page="arguing-persuading">• Arguing & Persuading</a>
+                <a href="#" class="mobile-nav-link academic-category" data-page="explaining-informing">• Explaining & Informing</a>
+                <a href="#" class="mobile-nav-link academic-category" data-page="engaging-readers">• Engaging Readers</a>
+                <a href="#" class="mobile-nav-link academic-category" data-page="constructing-knowledge">• Constructing Knowledge</a>
+            </div>
+            
             <a href="#" class="mobile-nav-link" data-page="references">References</a>
         </div>
     </div>
@@ -466,11 +593,24 @@
                     <p>Through this course, students will develop an understanding of how language functions in various social contexts and academic settings. We will analyze real-world examples and case studies to see theoretical concepts in action.</p>
                 </div>
                 
-                <div class="home-buttons">
+                <div class="category-intro social">
+                    <h3>Social Contexts of Language</h3>
+                    <p>Explore how language functions in everyday social interactions, expressing identity, managing power dynamics, and constructing social realities through linguistic choices.</p>
+                </div>
+                
+                <div class="home-buttons" style="margin: 25px 0;">
                     <a href="#" class="home-btn" data-page="social-contexts">
                         <i class="fas fa-users"></i>
                         <span>Social Contexts of Language</span>
                     </a>
+                </div>
+                
+                <div class="category-intro">
+                    <h3>Academic Contexts of Language</h3>
+                    <p>Discover how language is used in scholarly environments to argue, persuade, explain, and construct knowledge within academic discourse communities.</p>
+                </div>
+                
+                <div class="home-buttons">
                     <a href="#" class="home-btn" data-page="academic-contexts">
                         <i class="fas fa-graduation-cap"></i>
                         <span>Academic Contexts of Language</span>
@@ -480,33 +620,97 @@
                 <div class="content-block">
                     <h3>Key Topics</h3>
                     <ul>
-                        <li>Language and social identity</li>
-                        <li>Power dynamics in language use</li>
-                        <li>Politeness norms across cultures</li>
-                        <li>Construction of social realities through language</li>
+                        <li><strong>Social Contexts:</strong> Language and identity, power dynamics, politeness norms, social realities</li>
+                        <li><strong>Academic Contexts:</strong> Argumentation, explanation, reader engagement, knowledge construction</li>
                     </ul>
                 </div>
             </div>
             
-            <!-- Social Contexts Page -->
+            <!-- Social Contexts Parent Page -->
             <div id="social-contexts" class="page">
-                <h2>Language and Constructing Identities: Social Contexts</h2>
-                <p>Language serves as a powerful tool for constructing and expressing social identities across different contexts. This section explores the various ways language functions in social settings.</p>
+                <h2>Social Contexts of Language</h2>
+                <p>Language serves as a powerful tool for constructing and expressing social identities across different contexts. This section explores how linguistic practices shape and are shaped by social interactions, relationships, and cultural norms.</p>
                 
                 <div class="content-block">
-                    <h3>Key Aspects of Language in Social Contexts</h3>
+                    <h3>Core Components of Social Language Use</h3>
+                    <p>Social language use encompasses several interconnected dimensions that help us navigate our social worlds:</p>
                     <ul>
-                        <li>Expressing Social Identity</li>
-                        <li>Managing Power Dynamics</li>
-                        <li>Navigating Politeness Norms</li>
-                        <li>Constructing Social Realities</li>
+                        <li><strong>Expressing Social Identity</strong> - How language helps construct and communicate who we are</li>
+                        <li><strong>Managing Power Dynamics</strong> - How language reflects and reinforces social hierarchies</li>
+                        <li><strong>Navigating Politeness Norms</strong> - Cultural variations in linguistic politeness</li>
+                        <li><strong>Constructing Social Realities</strong> - How language shapes our perception of social worlds</li>
                     </ul>
                 </div>
                 
-                <p>These elements work together to shape how individuals present themselves and interpret others in social interactions, influenced by cultural norms and societal structures.</p>
+                <div class="category-intro social" style="margin: 25px 0;">
+                    <h3>Why Social Contexts Matter</h3>
+                    <p>Understanding social language use is essential for recognizing how communication creates and maintains social structures, relationships, and cultural practices. These linguistic patterns vary significantly across cultures and social groups.</p>
+                </div>
+                
+                <h3>Explore Related Topics</h3>
+                <div class="home-buttons">
+                    <a href="#" class="home-btn" data-page="expressing-identity">
+                        <i class="fas fa-id-card"></i>
+                        <span>Expressing Identity</span>
+                    </a>
+                    <a href="#" class="home-btn" data-page="power-dynamics">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Power Dynamics</span>
+                    </a>
+                    <a href="#" class="home-btn" data-page="politeness-norms">
+                        <i class="fas fa-smile"></i>
+                        <span>Politeness Norms</span>
+                    </a>
+                    <a href="#" class="home-btn" data-page="social-realities">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Social Realities</span>
+                    </a>
+                </div>
             </div>
             
-            <!-- Expressing Identity Page -->
+            <!-- Academic Contexts Parent Page -->
+            <div id="academic-contexts" class="page">
+                <h2>Academic Contexts of Language</h2>
+                <p>Academic discourse employs language in specialized ways to create, disseminate, and legitimize knowledge within scholarly communities. This section examines the distinctive linguistic practices of academic communication.</p>
+                
+                <div class="content-block">
+                    <h3>Core Components of Academic Language Use</h3>
+                    <p>Academic language functions through several interconnected dimensions that facilitate scholarly communication:</p>
+                    <ul>
+                        <li><strong>Arguing and Persuading</strong> - Presenting evidence-based arguments</li>
+                        <li><strong>Explaining and Informing</strong> - Clarifying concepts and processes</li>
+                        <li><strong>Engaging with Readers</strong> - Building relationships with academic audiences</li>
+                        <li><strong>Constructing Knowledge</strong> - Participating in disciplinary knowledge creation</li>
+                    </ul>
+                </div>
+                
+                <div class="category-intro" style="margin: 25px 0;">
+                    <h3>Why Academic Contexts Matter</h3>
+                    <p>Understanding academic discourse practices is crucial for successful participation in scholarly communities. These linguistic patterns vary across disciplines and cultural traditions, reflecting different epistemological assumptions and communicative purposes.</p>
+                </div>
+                
+                <h3>Explore Related Topics</h3>
+                <div class="home-buttons">
+                    <a href="#" class="home-btn" data-page="arguing-persuading">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Arguing & Persuading</span>
+                    </a>
+                    <a href="#" class="home-btn" data-page="explaining-informing">
+                        <i class="fas fa-book-open"></i>
+                        <span>Explaining & Informing</span>
+                    </a>
+                    <a href="#" class="home-btn" data-page="engaging-readers">
+                        <i class="fas fa-users"></i>
+                        <span>Engaging Readers</span>
+                    </a>
+                    <a href="#" class="home-btn" data-page="constructing-knowledge">
+                        <i class="fas fa-cube"></i>
+                        <span>Constructing Knowledge</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Social Subpages -->
             <div id="expressing-identity" class="page">
                 <h2>Expressing Social Identity</h2>
                 
@@ -521,9 +725,23 @@
                     <li>Code-switching between languages or varieties to navigate different social contexts</li>
                     <li>Adoption of speech patterns associated with particular gender expressions</li>
                 </ul>
+                
+                <div class="category-intro social" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Social Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="power-dynamics">
+                            <span>Power Dynamics</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="politeness-norms">
+                            <span>Politeness Norms</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="social-realities">
+                            <span>Social Realities</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Power Dynamics Page -->
             <div id="power-dynamics" class="page">
                 <h2>Managing Power Dynamics</h2>
                 
@@ -538,9 +756,23 @@
                     <li>Control of topics and turn-taking in institutional discourse</li>
                     <li>Linguistic discrimination and legitimization of certain varieties over others</li>
                 </ul>
+                
+                <div class="category-intro social" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Social Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="expressing-identity">
+                            <span>Expressing Identity</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="politeness-norms">
+                            <span>Politeness Norms</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="social-realities">
+                            <span>Social Realities</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Politeness Norms Page -->
             <div id="politeness-norms" class="page">
                 <h2>Navigating Politeness Norms</h2>
                 
@@ -555,9 +787,23 @@
                     <li>Compliment responses and self-praise avoidance</li>
                     <li>Apology rituals and face-saving strategies</li>
                 </ul>
+                
+                <div class="category-intro social" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Social Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="expressing-identity">
+                            <span>Expressing Identity</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="power-dynamics">
+                            <span>Power Dynamics</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="social-realities">
+                            <span>Social Realities</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Social Realities Page -->
             <div id="social-realities" class="page">
                 <h2>Constructing Social Realities</h2>
                 
@@ -572,27 +818,24 @@
                     <li>Institutional discourse shaping professional realities</li>
                     <li>Metaphorical conceptualization of abstract concepts</li>
                 </ul>
-            </div>
-            
-            <!-- Academic Contexts Page -->
-            <div id="academic-contexts" class="page">
-                <h2>Academic Contexts</h2>
-                <p>Academic discourse employs language in specialized ways to create, disseminate, and legitimize knowledge within scholarly communities.</p>
                 
-                <div class="content-block">
-                    <h3>Key Functions of Language in Academic Contexts</h3>
-                    <ul>
-                        <li>Arguing and Persuading</li>
-                        <li>Explaining and Informing</li>
-                        <li>Engaging with Readers</li>
-                        <li>Constructing Knowledge</li>
-                    </ul>
+                <div class="category-intro social" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Social Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="expressing-identity">
+                            <span>Expressing Identity</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="power-dynamics">
+                            <span>Power Dynamics</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="politeness-norms">
+                            <span>Politeness Norms</span>
+                        </a>
+                    </div>
                 </div>
-                
-                <p>These practices vary across disciplines and cultural traditions, reflecting different epistemological assumptions and communicative purposes.</p>
             </div>
             
-            <!-- Arguing & Persuading Page -->
+            <!-- Academic Subpages -->
             <div id="arguing-persuading" class="page">
                 <h2>Arguing and Persuading</h2>
                 
@@ -607,9 +850,23 @@
                     <li>Rhetorical moves in constructing arguments</li>
                     <li>Counterargument and concession strategies</li>
                 </ul>
+                
+                <div class="category-intro" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Academic Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="explaining-informing">
+                            <span>Explaining & Informing</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="engaging-readers">
+                            <span>Engaging Readers</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="constructing-knowledge">
+                            <span>Constructing Knowledge</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Explaining & Informing Page -->
             <div id="explaining-informing" class="page">
                 <h2>Explaining and Informing</h2>
                 
@@ -624,9 +881,23 @@
                     <li>Comparative and contrastive frameworks</li>
                     <li>Sequencing and structuring information for clarity</li>
                 </ul>
+                
+                <div class="category-intro" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Academic Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="arguing-persuading">
+                            <span>Arguing & Persuading</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="engaging-readers">
+                            <span>Engaging Readers</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="constructing-knowledge">
+                            <span>Constructing Knowledge</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Engaging Readers Page -->
             <div id="engaging-readers" class="page">
                 <h2>Engaging with Readers</h2>
                 
@@ -641,9 +912,23 @@
                     <li>Rhetorical questions and direct address</li>
                     <li>Textual signposting and forecasting</li>
                 </ul>
+                
+                <div class="category-intro" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Academic Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="arguing-persuading">
+                            <span>Arguing & Persuading</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="explaining-informing">
+                            <span>Explaining & Informing</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="constructing-knowledge">
+                            <span>Constructing Knowledge</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Constructing Knowledge Page -->
             <div id="constructing-knowledge" class="page">
                 <h2>Constructing Knowledge</h2>
                 
@@ -658,6 +943,21 @@
                     <li>Genre conventions and disciplinary expectations</li>
                     <li>Negotiation of claims within discourse communities</li>
                 </ul>
+                
+                <div class="category-intro" style="margin-top: 20px;">
+                    <p><strong>Navigate Related Academic Contexts:</strong></p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="arguing-persuading">
+                            <span>Arguing & Persuading</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="explaining-informing">
+                            <span>Explaining & Informing</span>
+                        </a>
+                        <a href="#" class="home-btn" style="flex: 1; padding: 10px 5px; font-size: 0.8rem;" data-page="engaging-readers">
+                            <span>Engaging Readers</span>
+                        </a>
+                    </div>
+                </div>
             </div>
             
             <!-- References Page -->
@@ -665,56 +965,31 @@
                 <h2>Reference Materials</h2>
                 <p>Below are relevant sources for further reading on sociocultural linguistics topics:</p>
                 
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Sociocultural Linguistics Theme</th>
-                            <th>Relevant Source</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Social Contexts</td>
-                            <td><a href="https://mrdowoportal.weebly.com/uploads/1/0/1/8/10183165/wardhaugh-fuller2015-an_introduction_to_sociolinguistics.pdf" target="_blank">Wardhaugh & Fuller (2015)</a></td>
-                        </tr>
-                        <tr>
-                            <td>Expressing Social Identity</td>
-                            <td><a href="https://mrdowoportal.weebly.com/uploads/1/0/1/8/10183165/wardhaugh-fuller2015-an_introduction_to_sociolinguistics.pdf" target="_blank">Wardhaugh & Fuller (2015)</a></td>
-                        </tr>
-                        <tr>
-                            <td>Managing Power Dynamics</td>
-                            <td><a href="https://mrdowoportal.weebly.com/uploads/1/0/1/8/10183165/wardhaugh-fuller2015-an_introduction_to_sociolinguistics.pdf" target="_blank">Wardhaugh & Fuller (2015)</a></td>
-                        </tr>
-                        <tr>
-                            <td>Navigating Politeness Norms</td>
-                            <td><a href="https://mrdowoportal.weebly.com/uploads/1/0/1/8/10183165/wardhaugh-fuller2015-an_introduction_to_sociolinguistics.pdf" target="_blank">Wardhaugh & Fuller (2015)</a></td>
-                        </tr>
-                        <tr>
-                            <td>Constructing Social Realities</td>
-                            <td><a href="https://mrdowoportal.weebly.com/uploads/1/0/1/8/10183165/wardhaugh-fuller2015-an_introduction_to_sociolinguistics.pdf" target="_blank">Wardhaugh & Fuller (2015)</a></td>
-                        </tr>
-                        <tr>
-                            <td>Academic Contexts</td>
-                            <td><a href="https://www.cambridgescholars.com/resources/pdfs/978-1-0364-0052-1-sample.pdf" target="_blank">Cambridge Scholars Publishing</a></td>
-                        </tr>
-                        <tr>
-                            <td>Arguing and Persuading</td>
-                            <td><a href="https://www.cambridgescholars.com/resources/pdfs/978-1-0364-0052-1-sample.pdf" target="_blank">Cambridge Scholars Publishing</a></td>
-                        </tr>
-                        <tr>
-                            <td>Explaining and Informing</td>
-                            <td><a href="https://www.cambridgescholars.com/resources/pdfs/978-1-0364-0052-1-sample.pdf" target="_blank">Cambridge Scholars Publishing</a></td>
-                        </tr>
-                        <tr>
-                            <td>Engaging with Readers</td>
-                            <td><a href="https://www.cambridgescholars.com/resources/pdfs/978-1-0364-0052-1-sample.pdf" target="_blank">Cambridge Scholars Publishing</a></td>
-                        </tr>
-                        <tr>
-                            <td>Constructing Knowledge</td>
-                            <td><a href="https://www.cambridgescholars.com/resources/pdfs/978-1-0364-0052-1-sample.pdf" target="_blank">Cambridge Scholars Publishing</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="references-section">
+                    <div class="references-category">
+                        <h3>Social Contexts Resources</h3>
+                        <a href="https://mrdowoportal.weebly.com/uploads/1/0/1/8/10183165/wardhaugh-fuller2015-an_introduction_to_sociolinguistics.pdf" target="_blank" class="reference-link">
+                            <i class="fas fa-book"></i> Wardhaugh & Fuller (2015) - An Introduction to Sociolinguistics
+                        </a>
+                    </div>
+                    
+                    <div class="references-category">
+                        <h3>Academic Contexts Resources</h3>
+                        <a href="https://www.cambridgescholars.com/resources/pdfs/978-1-0364-0052-1-sample.pdf" target="_blank" class="reference-link">
+                            <i class="fas fa-book"></i> Cambridge Scholars Publishing - Academic Writing Resources
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="content-block" style="margin-top: 30px;">
+                    <h3>Additional Resources</h3>
+                    <p>These supplementary materials provide deeper insights into specific aspects of sociocultural linguistics:</p>
+                    <ul>
+                        <li><a href="https://www.linguisticsociety.org/resource/introduction-sociolinguistics" target="_blank" style="color: var(--primary);">Linguistic Society of America - Introduction to Sociolinguistics</a></li>
+                        <li><a href="https://www.cambridge.org/core/books/second-language-writing-systems/INTRODUCTION-TO-ACADEMIC-WRITING-IN-ENGLISH/5B9C5C8D3E0B0F0D7D3C3F3E3D3C3F3E" target="_blank" style="color: var(--primary);">Cambridge University Press - Academic Writing in English</a></li>
+                        <li><a href="https://www.sil.org/resources/publications" target="_blank" style="color: var(--primary);">SIL International - Sociolinguistic Resources</a></li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>
@@ -776,6 +1051,15 @@
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu-items');
             menu.classList.toggle('show');
+        }
+        
+        // Mobile dropdown toggle
+        function toggleMobileDropdown(category) {
+            const dropdown = document.getElementById(`${category}-dropdown`);
+            const indicator = document.getElementById(`${category}-indicator`);
+            
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            indicator.classList.toggle('open');
         }
     </script>
 </body>
