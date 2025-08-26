@@ -21,6 +21,8 @@
             --accent: #ffc107;
             --text: #212121;
             --text-light: #757575;
+            --session-bg: #FFD700; /* Bright gold/yellow */
+            --session-text: #000; /* Black for contrast */
         }
         
         body {
@@ -44,8 +46,22 @@
             text-align: center;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000; /* Increased to ensure it's always on top */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .session-title {
+            background-color: var(--session-bg);
+            color: var(--session-text);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: inline-block;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            max-width: 100%;
+            word-wrap: break-word;
         }
         
         h1 {
@@ -87,7 +103,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: sticky;
             top: 110px;
-            z-index: 99;
+            z-index: 999; /* Increased to ensure it's below header but above content */
         }
         
         nav ul {
@@ -250,6 +266,8 @@
         /* Mobile menu styles */
         .mobile-menu-container {
             display: none;
+            position: relative;
+            z-index: 998; /* Ensure mobile menu appears below header */
         }
         
         @media (max-width: 900px) {
@@ -261,6 +279,10 @@
                 display: block;
                 background-color: white;
                 padding: 10px 0;
+                position: sticky;
+                top: 110px; /* Position below header */
+                z-index: 998;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
             
             .mobile-menu-header {
@@ -318,6 +340,12 @@
                 font-size: 1.3rem;
             }
             
+            .session-title {
+                font-size: 1rem;
+                padding: 6px 12px;
+                margin-bottom: 8px;
+            }
+            
             .home-buttons {
                 grid-template-columns: 1fr;
             }
@@ -348,6 +376,12 @@
                 font-size: 1.2rem;
             }
             
+            .session-title {
+                font-size: 0.95rem;
+                padding: 5px 10px;
+                margin-bottom: 8px;
+            }
+            
             .content-block {
                 padding: 15px;
             }
@@ -355,12 +389,18 @@
             .ref-table {
                 font-size: 0.75rem;
             }
+            
+            /* Ensure mobile menu doesn't overlap with session title */
+            .mobile-menu-container {
+                top: 135px; /* Adjusted for session title height */
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
+            <div class="session-title">Session 4: Cultural Uses of Language</div>
             <h1>ALS 863: Introduction to Sociocultural Linguistics</h1>
             <p class="subtitle">Exploring the relationship between language, society, and culture</p>
             <div class="contact-info">
@@ -444,7 +484,6 @@
                         <li>Power dynamics in language use</li>
                         <li>Politeness norms across cultures</li>
                         <li>Construction of social realities through language</li>
-                        <li>Academic discourse practices</li>
                     </ul>
                 </div>
             </div>
