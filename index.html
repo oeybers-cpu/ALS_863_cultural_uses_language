@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALL 863: Introduction to Sociocultural Linguistics</title>
+    <title>ALS 863: Introduction to Sociocultural Linguistics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -247,22 +247,67 @@
             font-weight: 500;
         }
         
-        @media (max-width: 768px) {
+        /* Mobile menu styles */
+        .mobile-menu-container {
+            display: none;
+        }
+        
+        @media (max-width: 900px) {
             nav ul {
-                flex-direction: column;
                 display: none;
             }
             
-            nav ul.show {
-                display: flex;
-            }
-            
-            nav li {
-                margin: 3px 0;
-            }
-            
-            .menu-toggle {
+            .mobile-menu-container {
                 display: block;
+                background-color: white;
+                padding: 10px 0;
+            }
+            
+            .mobile-menu-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 15px;
+            }
+            
+            .mobile-menu-title {
+                font-weight: 600;
+                color: var(--primary);
+            }
+            
+            .mobile-menu-toggle {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                color: var(--primary);
+                cursor: pointer;
+            }
+            
+            .mobile-menu-items {
+                display: none;
+                padding: 10px 15px;
+                border-top: 1px solid #eee;
+            }
+            
+            .mobile-menu-items.show {
+                display: block;
+            }
+            
+            .mobile-nav-link {
+                display: block;
+                padding: 12px 10px;
+                color: var(--text);
+                text-decoration: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .mobile-nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            .mobile-nav-link.active {
+                color: var(--primary);
+                font-weight: 600;
             }
             
             h1 {
@@ -315,9 +360,8 @@
 </head>
 <body>
     <header>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <div class="container">
-            <h1>ALL 863: Introduction to Sociocultural Linguistics</h1>
+            <h1>ALS 863: Introduction to Sociocultural Linguistics</h1>
             <p class="subtitle">Exploring the relationship between language, society, and culture</p>
             <div class="contact-info">
                 <i class="fas fa-envelope"></i> Dr Oscar Eybers: 
@@ -326,6 +370,7 @@
         </div>
     </header>
     
+    <!-- Desktop Navigation -->
     <nav>
         <div class="container">
             <ul id="nav-menu">
@@ -344,6 +389,30 @@
             </ul>
         </div>
     </nav>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-title">Menu</div>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-items" id="mobile-menu-items">
+            <a href="#" class="mobile-nav-link active" data-page="home">Home</a>
+            <a href="#" class="mobile-nav-link" data-page="social-contexts">Social Contexts</a>
+            <a href="#" class="mobile-nav-link" data-page="expressing-identity">Expressing Identity</a>
+            <a href="#" class="mobile-nav-link" data-page="power-dynamics">Power Dynamics</a>
+            <a href="#" class="mobile-nav-link" data-page="politeness-norms">Politeness Norms</a>
+            <a href="#" class="mobile-nav-link" data-page="social-realities">Social Realities</a>
+            <a href="#" class="mobile-nav-link" data-page="academic-contexts">Academic Contexts</a>
+            <a href="#" class="mobile-nav-link" data-page="arguing-persuading">Arguing & Persuading</a>
+            <a href="#" class="mobile-nav-link" data-page="explaining-informing">Explaining & Informing</a>
+            <a href="#" class="mobile-nav-link" data-page="engaging-readers">Engaging Readers</a>
+            <a href="#" class="mobile-nav-link" data-page="constructing-knowledge">Constructing Knowledge</a>
+            <a href="#" class="mobile-nav-link" data-page="references">References</a>
+        </div>
+    </div>
     
     <div class="container">
         <main>
@@ -613,7 +682,7 @@
     
     <footer>
         <div class="container">
-            <p>ALL 863: Introduction to Sociocultural Linguistics</p>
+            <p>ALS 863: Introduction to Sociocultural Linguistics</p>
             <p>University of Pretoria | Dr Oscar Eybers</p>
         </div>
     </footer>
@@ -621,7 +690,7 @@
     <script>
         // Navigation functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link, .home-btn');
+            const navLinks = document.querySelectorAll('.nav-link, .home-btn, .mobile-nav-link');
             const pages = document.querySelectorAll('.page');
             
             navLinks.forEach(link => {
@@ -630,15 +699,25 @@
                     
                     // Remove active class from all links and pages
                     document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+                    document.querySelectorAll('.mobile-nav-link').forEach(item => item.classList.remove('active'));
                     pages.forEach(page => page.classList.remove('active'));
                     
                     // Add active class to clicked link
-                    if (this.classList.contains('nav-link')) {
+                    if (this.classList.contains('nav-link') || this.classList.contains('mobile-nav-link')) {
                         this.classList.add('active');
+                        
+                        // Also update the corresponding link in the other menu
+                        const pageId = this.getAttribute('data-page');
+                        if (this.classList.contains('nav-link')) {
+                            document.querySelector(`.mobile-nav-link[data-page="${pageId}"]`).classList.add('active');
+                        } else {
+                            document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
+                        }
                     } else {
                         // If home button was clicked, find corresponding nav link
                         const pageId = this.getAttribute('data-page');
                         document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
+                        document.querySelector(`.mobile-nav-link[data-page="${pageId}"]`).classList.add('active');
                     }
                     
                     // Show corresponding page
@@ -646,7 +725,7 @@
                     document.getElementById(pageId).classList.add('active');
                     
                     // Close mobile menu after selection
-                    document.getElementById('nav-menu').classList.remove('show');
+                    document.getElementById('mobile-menu-items').classList.remove('show');
                     
                     // Scroll to top
                     window.scrollTo(0, 0);
@@ -655,8 +734,8 @@
         });
         
         // Mobile menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu-items');
             menu.classList.toggle('show');
         }
     </script>
